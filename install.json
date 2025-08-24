@@ -1,0 +1,5 @@
+{
+  "packageManager": "python",
+  "packageName": "npi_file_manager_ext",
+  "uninstallInstructions": "Use your Python package manager (pip, conda, etc.) to uninstall the package npi_file_manager_ext"
+}

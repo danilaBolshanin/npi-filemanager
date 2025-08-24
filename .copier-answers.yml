@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.4.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: danila.bolshanin@gmail.com
+author_name: npi-file-manager-ext
+has_binder: true
+has_settings: false
+kind: frontend
+labextension_name: npi-file-manager-ext
+project_short_description: A JupyterLab extension.
+python_name: npi_file_manager_ext
+repository: https://npi-project.gitlab.yandexcloud.net/backend/npi-jlx
+test: true
+

@@ -1,0 +1,404 @@
+/* Скрытие стандартных панелей JupyterLab */
+#jp-left-stack {
+  display: none !important;
+}
+
+#jp-main-dock-panel {
+  min-width: calc(100% - 385px) !important;
+  width: calc(100% - 385px) !important;
+  left: 390px !important;
+}
+
+#jp-main-content-panel
+  > div.lm-Widget.lm-TabBar.jp-SideBar.jp-mod-left.lm-BoxPanel-child {
+  display: none !important;
+}
+
+#jp-main-content-panel
+  > div.lm-Widget.lm-TabBar.jp-SideBar.jp-mod-right.lm-BoxPanel-child {
+  display: none !important;
+}
+
+#jp-bottom-panel {
+  display: none !important;
+}
+
+/* Стили для кастомных панелей */
+.npi-dockpanel {
+  position: fixed;
+  left: 385px;
+  top: 30px;
+  z-index: 1000;
+  background-color: white;
+  width: calc(100% - 420px);
+  height: 100%;
+}
+
+.npi-stackedpanel {
+  position: fixed;
+  left: 0;
+  top: 30px;
+  z-index: 1000;
+  background-color: white;
+  min-width: 385px;
+  width: 385px;
+  height: 100%;
+}
+
+/* Стили для FileTreeWidget */
+.jp-filetreeWidget {
+  background: var(--jp-layout-color1);
+  overflow: auto;
+  color: var(--jp-ui-font-color1);
+  font-size: var(--jp-ui-font-size1);
+}
+
+.jp-filetreeWidget header {
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color2);
+  flex: 0 0 auto;
+  font-size: var(--jp-ui-font-size0);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 0px;
+  padding: 8px 12px;
+  text-transform: uppercase;
+}
+
+.filetree-head {
+  width: 100%;
+  border-spacing: 0px;
+  overflow: scroll;
+}
+
+.filetree-item-name {
+  padding-left: var(--indent);
+  padding-right: 10px;
+  display: flex;
+  position: relative;
+}
+
+.filetree-item {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: center;
+  padding-top: 2px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.filetree-item:hover {
+  cursor: pointer;
+  background-color: var(--jp-input-hover-background);
+}
+
+.filetree-item.selected {
+  color: white;
+  background: var(--jp-brand-color1);
+}
+
+/* Вертикальные линии для дерева */
+.filetree-item-name::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(var(--indent) - 0.5em);
+  bottom: 0;
+  border-left: 1px solid var(--jp-border-color2);
+  z-index: 1;
+}
+
+.filetree-item-name::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: calc(var(--indent) - 0.5em);
+  width: 0.5em;
+  border-top: 1px solid var(--jp-border-color2);
+  z-index: 1;
+}
+
+.filetree-item-name[style*='--indent: 1em']::before,
+.filetree-item-name[style*='--indent: 1em']::after {
+  display: none;
+}
+
+.filetree-item-name.last::before {
+  bottom: 50%;
+}
+
+.filetree-item-name .jp-DirListing-itemIcon {
+  position: relative;
+  z-index: 2;
+}
+
+.filetree-item-name .filetree-name-span {
+  position: relative;
+  z-index: 2;
+}
+
+.filetree-item:hover .filetree-item-name::before,
+.filetree-item:hover .filetree-item-name::after {
+  border-color: var(--jp-brand-color1);
+}
+
+.filetree-folder.open > .filetree-item-name::before {
+  bottom: 0;
+}
+
+.filetree-folder.open > .filetree-item-name .jp-DirListing-itemIcon {
+  color: var(--jp-brand-color1);
+}
+
+.filetree-item {
+  transition: background-color 0.2s ease;
+}
+
+.filetree-folder.open {
+  background-color: var(--jp-layout-color2);
+}
+
+.filetree-folder.open > .filetree-item-name::after {
+  border-top: 2px solid var(--jp-brand-color1);
+}
+
+.filetree-item.selected .filetree-item-name::before,
+.filetree-item.selected .filetree-item-name::after {
+  border-color: white;
+}
+
+/* Стили для иконок JavaScript */
+.filetree-item.file-js .jp-DirListing-itemIcon svg path {
+  fill: #f7df1e !important; /* JavaScript yellow */
+}
+
+/* Стили для иконок TypeScript */
+.filetree-item.file-ts .jp-DirListing-itemIcon svg path {
+  fill: #007acc !important; /* TypeScript blue */
+}
+
+/* Стили для JSON файлов */
+.filetree-item.file-json .jp-DirListing-itemIcon svg path {
+  fill: #f5de1a !important; /* JSON yellow */
+}
+
+/* Стили для CSS файлов */
+.filetree-item.file-css .jp-DirListing-itemIcon svg path {
+  fill: #264de4 !important; /* CSS blue */
+}
+
+/* Стили для HTML файлов */
+.filetree-item.file-html .jp-DirListing-itemIcon svg path {
+  fill: #e34f26 !important; /* HTML orange */
+}
+
+/* Стили для Python файлов */
+.filetree-item.file-py .jp-DirListing-itemIcon svg path {
+  fill: #3776ab !important; /* Python blue */
+}
+
+.filetree-item.file-js:hover,
+.filetree-item.file-ts:hover,
+.filetree-item.file-json:hover,
+.filetree-item.file-css:hover,
+.filetree-item.file-html:hover,
+.filetree-item.file-py:hover {
+  background-color: var(--jp-layout-color3) !important;
+}
+
+/* Стили для TileFileManagerWidget */
+.jp-tileManagerWidget {
+  background: var(--jp-layout-color1);
+  overflow: auto;
+  color: var(--jp-ui-font-color1);
+  font-size: var(--jp-ui-font-size1);
+  padding: 10px;
+}
+
+.tile-breadcrumb {
+  margin-bottom: 15px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: var(--jp-ui-font-size0);
+  background-color: transparent !important; /* Убираем фон */
+}
+
+.tile-breadcrumb-path {
+  display: flex;
+  align-items: center;
+}
+
+.tile-breadcrumb-separator {
+  margin: 0 5px;
+  color: var(--jp-ui-font-color2);
+}
+
+.tile-breadcrumb-item {
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.tile-breadcrumb-item:hover {
+  background-color: var(--jp-layout-color3);
+}
+
+.tile-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+  padding: 12px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--jp-layout-color1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 100px;
+  border: 2px solid transparent;
+}
+
+.tile:hover {
+  background-color: var(--jp-layout-color2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tile.directory {
+  background-color: var(--jp-layout-color1);
+  border: none;
+}
+
+/* Добавляем границу только для файлов */
+.tile.file {
+  border: 1px solid var(--jp-border-color2);
+}
+
+.tile-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile-icon svg {
+  width: 48px !important;
+  height: 48px !important;
+}
+
+/* Уменьшенный текст */
+.tile-name {
+  text-align: center;
+  font-size: var(--jp-ui-font-size0);
+  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-width: 80px;
+  line-height: 1.3;
+}
+
+.tile-error {
+  color: var(--jp-error-color1);
+  padding: 20px;
+  text-align: center;
+}
+
+/* Стили для иконок в TileFileManagerWidget */
+.tile.file-js .tile-icon svg path {
+  fill: #f7df1e !important;
+}
+
+.tile.file-ts .tile-icon svg path {
+  fill: #007acc !important;
+}
+
+.tile.file-json .tile-icon svg path {
+  fill: #f5de1a !important;
+}
+
+.tile.file-css .tile-icon svg path {
+  fill: #264de4 !important;
+}
+
+.tile.file-html .tile-icon svg path {
+  fill: #e34f26 !important;
+}
+
+.tile.file-py .tile-icon svg path {
+  fill: #3776ab !important;
+}
+
+/* Убираем фоновый цвет для всех файлов, оставляем только цветные иконки */
+.tile.file-js,
+.tile.file-ts,
+.tile.file-json,
+.tile.file-css,
+.tile.file-html,
+.tile.file-py {
+  background-color: var(--jp-layout-color1) !important;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .tile-container {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .tile {
+    padding: 8px;
+    min-height: 90px;
+  }
+
+  .tile-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .tile-icon svg {
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .tile-container {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .tile {
+    padding: 6px;
+    min-height: 80px;
+  }
+
+  .tile-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+  }
+
+  .tile-icon svg {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .tile-name {
+    font-size: 11px;
+    max-width: 70px;
+  }
+}
