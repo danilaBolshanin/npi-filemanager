@@ -3,7 +3,6 @@
 [![Github Actions Status](https://npi-project.gitlab.yandexcloud.net/backend/npi-jlx/workflows/Build/badge.svg)](https://npi-project.gitlab.yandexcloud.net/backend/npi-jlx/actions/workflows/build.yml)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/https://npi-project.gitlab.yandexcloud.net/backend/npi-jlx/main?urlpath=lab)
 
-
 A JupyterLab extension.
 
 ## Requirements
