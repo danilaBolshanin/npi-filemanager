@@ -19,18 +19,21 @@ export class FileTreeWidget extends Widget {
   public selected: string;
   private _openFolders: Set<string> = new Set();
   private _onFolderChange: (path: string) => void;
+  private _onFileClick: (path: string) => void;
 
   public constructor(
     lab: JupyterFrontEnd,
     basepath = '',
     id = 'jupyterlab-filetree',
-    onFolderChange: (path: string) => void = () => {}
+    onFolderChange: (path: string) => void = () => {},
+    onFileClick: (path: string) => void = () => {}
   ) {
     super();
     this.id = id;
     this.addClass('jp-filetreeWidget');
     this.addClass(id);
     this._onFolderChange = onFolderChange;
+    this._onFileClick = onFileClick;
 
     // Инициализация сервисов
     //@ts-ignore
@@ -177,6 +180,7 @@ export class FileTreeWidget extends Widget {
             commands.execute(CommandIDs.rename + ':' + this.id);
           } else {
             this.selectItem(path);
+            this._onFileClick(path); 
           }
         };
 

@@ -13,6 +13,7 @@ import { FileTreeWidget } from './file-tree';
 import { CommandIDs, switchView, u_atob, u_btoa } from './utils';
 import { PathExt } from '@jupyterlab/coreutils';
 import { TileFileManagerWidget } from './tile-file-manager';
+import { TogglePanelWidget } from './toggle-main-panel-btn';
 
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'react-widget',
@@ -31,6 +32,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, {}: JupyterFrontEnd) => {
     const dockPanel = new DockPanel();
     const stackedPanel = new StackedPanel();
+    const toggleButton = new TogglePanelWidget(dockPanel);
 
     const fileTree = new FileTreeWidget(
       app,
@@ -38,6 +40,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
       'jupyterlab-filetree',
       (path: any) => {
         tileManager.navigateTo(path);
+      },
+      _ => {
+        dockPanel.node.style.display = 'none';
       }
     );
     const tileManager = new TileFileManagerWidget(
@@ -46,8 +51,21 @@ const plugin: JupyterFrontEndPlugin<void> = {
       (path: any) => {
         fileTree.navigateTo(path);
       },
+      _ => {
+        dockPanel.node.style.display = 'none';
+        if (toggleButton) {
+          toggleButton.node.style.display = 'block';
+        }
+      },
       'jupyterlab-filetree'
     );
+
+    //опциональная привязка через публичный метод класса, сделано на случай, если будут баги с прямой привязкой. для file tree по аналогии
+    /*
+    tileManager.setFolderChangeCallback(path => {
+      fileTree.navigateTo(path);
+    });
+    */
 
     //main doc panel (with lauchers)
     dockPanel.id = 'npi-dockpanel';
@@ -59,8 +77,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
     stackedPanel.addClass('npi-stackedpanel');
     stackedPanel.addWidget(fileTree);
 
+    //fixed toggle button
+    toggleButton.id = 'npi-toggle-container';
+
     app.shell.add(dockPanel, 'top', {});
     app.shell.add(stackedPanel, 'top', {});
+    app.shell.add(toggleButton, 'top', { rank: 1000 });
 
     app.commands.addCommand(CommandIDs.toggle + ':' + fileTree.id, {
       execute: args => {

@@ -7,9 +7,11 @@ import { LabIcon } from '@jupyterlab/ui-components';
 export class TileFileManagerWidget extends Widget {
   public cm: ContentsManager;
   public dr: DocumentRegistry;
+  private lab: JupyterFrontEnd;
   public basepath: string;
   public currentPath: string;
   private _onFolderChange: (path: string) => void;
+  private _onFileClick: (path: string) => void;
   private _container: HTMLElement;
   private _breadcrumb: HTMLElement;
 
@@ -17,6 +19,7 @@ export class TileFileManagerWidget extends Widget {
     lab: JupyterFrontEnd,
     basepath: string = '',
     onFolderChange: (path: string) => void,
+    onFileClick: (path: string) => void,
     id: string = 'jupyterlab-tilemanager'
   ) {
     super();
@@ -27,9 +30,11 @@ export class TileFileManagerWidget extends Widget {
     //@ts-ignore
     this.cm = lab.serviceManager.contents;
     this.dr = lab.docRegistry;
+    this.lab = lab;
     this.basepath = basepath === '' ? basepath : basepath + ':';
     this.currentPath = '';
     this._onFolderChange = onFolderChange;
+    this._onFileClick = onFileClick;
 
     this._container = document.createElement('div');
     this._container.className = 'tile-container';
@@ -128,7 +133,7 @@ export class TileFileManagerWidget extends Widget {
         icon: this.dr.getFileType('directory')?.icon
       }) as HTMLElement;
       icon.className = 'tile-icon';
-      tile.className += ' directory'; // Добавляем класс для папок
+      tile.className += ' directory';
     } else {
       const extension = item.name.split('.').pop()?.toLowerCase();
 
@@ -160,7 +165,7 @@ export class TileFileManagerWidget extends Widget {
       }
 
       icon.className = 'tile-icon';
-      tile.className += ' file'; // Добавляем общий класс для файлов
+      tile.className += ' file';
     }
 
     // Создаем название
@@ -181,13 +186,33 @@ export class TileFileManagerWidget extends Widget {
         this._onFolderChange(path);
       };
     } else {
+      // Убираем обработку одинарного клика для файлов
+      // Оставляем только двойной клик
       tile.ondblclick = () => {
-        // TODO: Реализовать открытие файла
-        console.log('Open file:', item.path);
+        const path = item.path.startsWith('/')
+          ? item.path.substring(1)
+          : item.path;
+
+        // Скрываем главную панель при двойном клике
+        this._onFileClick(path);
+
+        // Открываем файл в лаунчере (аналогично FileTreeWidget)
+        // Для этого нам нужен доступ к commands из JupyterFrontEnd
+        // Передадим commands через замыкание или добавим в конструктор
+        this.openFile(item.path);
       };
     }
 
     return tile;
+  }
+
+  private openFile(path: string): void {
+    // Формируем полный путь с учетом basepath
+    const fullPath = this.basepath + path;
+
+    // Используем commands из JupyterFrontEnd для открытия файла
+    // Для этого нужно сохранить ссылку на lab в конструкторе
+    this.lab.commands.execute('docmanager:open', { path: fullPath });
   }
 
   private sortDataByType(data: any[]): any[] {

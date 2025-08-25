@@ -42,7 +42,7 @@
   background-color: white;
   min-width: 385px;
   width: 385px;
-  height: 100%;
+  height: calc(100% - 28px);
 }
 
 /* Стили для FileTreeWidget */
@@ -204,6 +204,10 @@
 .filetree-item.file-html:hover,
 .filetree-item.file-py:hover {
   background-color: var(--jp-layout-color3) !important;
+}
+
+th {
+  display: none !important;
 }
 
 /* Стили для TileFileManagerWidget */
@@ -401,4 +405,48 @@
     font-size: 11px;
     max-width: 70px;
   }
+}
+
+/* Контейнер для кнопки переключения */
+.npi-toggle-container {
+  position: fixed;
+  left: 390px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+/* Состояние, когда панель скрыта - перемещаем кнопку вправо */
+.npi-toggle-container.panel-hidden-state {
+  left: auto;
+  right: 48px;
+}
+
+/* Кнопка переключения панели */
+.npi-toggle-button {
+  background-color: var(--jp-brand-color1);
+  color: white;
+  border: none;
+  border-radius: 3px 0 0 3px;
+  padding: 10px 5px;
+  cursor: pointer;
+  font-size: 12px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.npi-toggle-button:hover {
+  background-color: var(--jp-brand-color0);
+  padding-left: 8px;
+}
+
+/* Анимация для плавного скрытия/показа панели */
+.npi-dockpanel {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.npi-dockpanel[style*="display: none"] {
+  opacity: 0;
+  transform: translateX(10px);
 }
