@@ -70,6 +70,11 @@ export class TileFileManagerWidget extends Widget {
     rootItem.onclick = () => this.navigateTo('');
     breadcrumbContainer.appendChild(rootItem);
 
+    rootItem.onclick = () => {
+      this.navigateTo('');
+      this._onFolderChange('');
+    };
+
     // Добавляем остальные элементы пути
     let currentPath = '';
     for (const part of parts) {

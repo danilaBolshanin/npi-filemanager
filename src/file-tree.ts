@@ -180,7 +180,7 @@ export class FileTreeWidget extends Widget {
             commands.execute(CommandIDs.rename + ':' + this.id);
           } else {
             this.selectItem(path);
-            this._onFileClick(path); 
+            this._onFileClick(path);
           }
         };
 
@@ -504,6 +504,25 @@ export class FileTreeWidget extends Widget {
     ) as HTMLElement;
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+
+  public collapseAll(): void {
+    // Закрываем все открытые папки
+    this._openFolders.forEach(openPath => {
+      this.closeFolder(openPath);
+    });
+    this._openFolders.clear();
+
+    // Снимаем выделение
+    if (this.selected) {
+      const prevElement = this.tree.querySelector(
+        `[data-path="${this.selected}"]`
+      );
+      if (prevElement) {
+        prevElement.classList.remove('selected');
+      }
+      this.selected = '';
     }
   }
 

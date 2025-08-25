@@ -38,7 +38,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       app,
       '',
       'jupyterlab-filetree',
-      (path: any) => {
+      (path: string) => {
         tileManager.navigateTo(path);
       },
       _ => {
@@ -48,8 +48,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
     const tileManager = new TileFileManagerWidget(
       app,
       '',
-      (path: any) => {
-        fileTree.navigateTo(path);
+      (path: string) => {
+        if (path === '') {
+          fileTree.collapseAll();
+        } else {
+          fileTree.navigateTo(path);
+        }
       },
       _ => {
         dockPanel.node.style.display = 'none';

@@ -443,10 +443,12 @@ th {
 
 /* Анимация для плавного скрытия/показа панели */
 .npi-dockpanel {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
-.npi-dockpanel[style*="display: none"] {
+.npi-dockpanel[style*='display: none'] {
   opacity: 0;
   transform: translateX(10px);
 }
