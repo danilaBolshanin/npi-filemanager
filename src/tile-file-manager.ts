@@ -187,23 +187,22 @@ export class TileFileManagerWidget extends Widget {
         const path = item.path.startsWith('/')
           ? item.path.substring(1)
           : item.path;
-        this.navigateTo(path);
+
+        // Обновляем текущий путь
+        this.currentPath = path;
+        this.updateBreadcrumb();
+        this.loadFolderContents();
+
+        // Уведомляем FileTree о изменении папки
         this._onFolderChange(path);
       };
     } else {
-      // Убираем обработку одинарного клика для файлов
-      // Оставляем только двойной клик
       tile.ondblclick = () => {
         const path = item.path.startsWith('/')
           ? item.path.substring(1)
           : item.path;
 
-        // Скрываем главную панель при двойном клике
         this._onFileClick(path);
-
-        // Открываем файл в лаунчере (аналогично FileTreeWidget)
-        // Для этого нам нужен доступ к commands из JupyterFrontEnd
-        // Передадим commands через замыкание или добавим в конструктор
         this.openFile(item.path);
       };
     }
@@ -212,11 +211,8 @@ export class TileFileManagerWidget extends Widget {
   }
 
   private openFile(path: string): void {
-    // Формируем полный путь с учетом basepath
     const fullPath = this.basepath + path;
 
-    // Используем commands из JupyterFrontEnd для открытия файла
-    // Для этого нужно сохранить ссылку на lab в конструкторе
     this.lab.commands.execute('docmanager:open', { path: fullPath });
   }
 

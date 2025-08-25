@@ -137,6 +137,8 @@ export class FileTreeWidget extends Widget {
             // Клик на папке - выделяем и переключаем
             this.selectItem(path);
             this.toggleFolder(path, level, tr);
+
+            this._onFolderChange(path);
           }
         };
 
@@ -460,22 +462,25 @@ export class FileTreeWidget extends Widget {
   }
 
   public navigateTo(path: string): void {
-    // Закрываем все открытые папки
-    this._openFolders.forEach(openPath => {
-      if (openPath !== path) {
-        this.closeFolder(openPath);
-      }
-    });
-    this._openFolders.clear();
+    const normalizedPath = path.replace(/^\/|\/$/g, '');
 
-    // Раскрываем путь к целевой папке
-    this.expandPathTo(path);
+    //this.collapseAll();
 
-    // Выделяем целевую папку
-    this.selectItem(path);
+    this.ensurePathExpanded(normalizedPath);
 
-    // Прокручиваем к выделенной папке
-    this.scrollToItem(path);
+    // Если путь пустой - останавливаемся на корне
+    /*
+    if (!normalizedPath) {
+      this.selected = '';
+      return;
+    }
+    */
+
+    this.expandPathTo(normalizedPath);
+
+    this.selectItem(normalizedPath);
+
+    this.scrollToItem(normalizedPath);
   }
 
   private expandPathTo(path: string): void {
@@ -494,6 +499,31 @@ export class FileTreeWidget extends Widget {
           this.openFolder(currentPath, level, element, false);
           this._openFolders.add(currentPath);
         }
+      }
+    }
+  }
+
+  private ensurePathExpanded(path: string): void {
+    const parts = path.split('/').filter(part => part !== '');
+    let currentPath = '';
+
+    for (const part of parts) {
+      currentPath = currentPath ? `${currentPath}/${part}` : part;
+
+      const element = this.tree.querySelector(
+        `[data-path="${currentPath}"]`
+      ) as HTMLElement;
+
+      if (element) {
+        const level = parseInt(element.getAttribute('data-level') || '0');
+
+        // Если папка еще не открыта, открываем ее
+        if (!this.controller[currentPath]?.open) {
+          this.openFolder(currentPath, level, element, false);
+        }
+      } else {
+        // Если элемента нет в DOM, нужно загрузить родительскую папку
+        console.warn('Element not found in DOM:', currentPath);
       }
     }
   }
