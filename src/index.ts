@@ -11,12 +11,13 @@ import {
 } from '@jupyterlab/apputils';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { IDocumentManager } from '@jupyterlab/docmanager';
+
 import { registerCommands } from './register';
 import { addToolbarItems, createDocumentManager, createFileManager, createMainWidgets, setupWidgets } from './pluginSetup';
 
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'react-widget',
-  description: 'A minimal JupyterLab extension using a React Widget.',
+  id: 'npi-filemanager',
+  description: 'NPI file manager extension for jupyterlab',
   autoStart: true,
   optional: [ILauncher],
   requires: [
