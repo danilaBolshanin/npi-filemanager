@@ -10,6 +10,7 @@ export class TogglePanelWidget extends Widget {
     super();
     this._dockPanel = dockPanel;
 
+    this.id = 'npi-toggle-container';
     this.addClass('npi-toggle-container');
 
     this._toggleButton = document.createElement('button');
