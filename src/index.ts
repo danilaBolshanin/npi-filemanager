@@ -5,15 +5,21 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { ILauncher } from '@jupyterlab/launcher';
-import { ICommandPalette, IWindowResolver } from '@jupyterlab/apputils';
+import {
+  ICommandPalette,
+  IWindowResolver,
+  ToolbarButton
+} from '@jupyterlab/apputils';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
-import { IDocumentManager } from '@jupyterlab/docmanager';
-import { DockPanel, StackedPanel } from '@lumino/widgets';
+import { DocumentManager, IDocumentManager } from '@jupyterlab/docmanager';
+import { DockPanel, StackedPanel, Widget } from '@lumino/widgets';
 import { FileTreeWidget } from './file-tree';
 import { CommandIDs, switchView, u_atob, u_btoa } from './utils';
 import { PathExt } from '@jupyterlab/coreutils';
 import { TileFileManagerWidget } from './tile-file-manager';
 import { TogglePanelWidget } from './toggle-main-panel-btn';
+import { refreshIcon } from '@jupyterlab/ui-components';
+import { Uploader } from './uploader';
 
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'react-widget',
@@ -29,10 +35,43 @@ const plugin: JupyterFrontEndPlugin<void> = {
     IDocumentManager,
     IRouter
   ],
-  activate: (app: JupyterFrontEnd, {}: JupyterFrontEnd) => {
+  activate: (app: JupyterFrontEnd) => {
+    const widgets: Widget[] = [];
+
     const dockPanel = new DockPanel();
     const stackedPanel = new StackedPanel();
     const toggleButton = new TogglePanelWidget(dockPanel);
+
+    const opener = {
+      open: (widget: Widget) => {
+        if (widgets.indexOf(widget) === -1) {
+          dockPanel.addWidget(widget, { mode: 'tab-after' });
+          widgets.push(widget);
+        }
+        dockPanel.activateWidget(widget);
+        //activeWidget = widget;
+        widget.disposed.connect((w: Widget) => {
+          const index = widgets.indexOf(w);
+          widgets.splice(index, 1);
+        });
+      },
+      get opened() {
+        return {
+          connect: () => {
+            return false;
+          },
+          disconnect: () => {
+            return false;
+          }
+        };
+      }
+    };
+
+    const docManger = new DocumentManager({
+      registry: app.docRegistry,
+      manager: app.serviceManager,
+      opener
+    });
 
     const fileTree = new FileTreeWidget(
       app,
@@ -64,12 +103,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       'jupyterlab-filetree'
     );
 
-    //опциональная привязка через публичный метод класса, сделано на случай, если будут баги с прямой привязкой. для file tree по аналогии
-    /*
-    tileManager.setFolderChangeCallback(path => {
-      fileTree.navigateTo(path);
-    });
-    */
+    const uploader = new Uploader({ manager: docManger, widget: fileTree });
 
     //main doc panel (with lauchers)
     dockPanel.id = 'npi-dockpanel';
@@ -166,6 +200,39 @@ const plugin: JupyterFrontEndPlugin<void> = {
       },
       label: 'Select'
     });
+
+    app.commands.addCommand(CommandIDs.refresh + ':' + fileTree.id, {
+      execute: () => {
+        Object.keys(fileTree.controller).forEach(key => {
+          const promise = app.serviceManager.contents.get(
+            fileTree.basepath + key
+          );
+          promise.then(async res => {
+            if (res.last_modified > fileTree.controller[key].last_modified) {
+              fileTree.controller[key].last_modified = res.last_modified;
+            }
+          });
+          promise.catch(reason => {
+            console.log(reason);
+            delete fileTree.controller[key];
+          });
+        });
+        fileTree.refresh();
+      }
+    });
+
+    const refresh = new ToolbarButton({
+      icon: refreshIcon,
+      onClick: () => {
+        app.commands.execute(CommandIDs.refresh + ':' + fileTree.id);
+      },
+      tooltip: 'Refresh'
+    });
+
+    fileTree.toolbar.addItem('upload', uploader);
+    fileTree.toolbar.addItem('refresh', refresh);
+
+    console.log(fileTree);
   }
 };
 

@@ -1,13 +1,13 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
-import { Widget } from '@lumino/widgets';
+import { PanelLayout, Widget } from '@lumino/widgets';
 import { ContentsManager } from '@jupyterlab/services';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { CommandIDs } from './utils';
-import { LabIcon } from '@jupyterlab/ui-components';
-//import { Time } from '@jupyterlab/coreutils';
+import { LabIcon, Toolbar } from '@jupyterlab/ui-components';
 
 export class FileTreeWidget extends Widget {
   public commands: any;
+  public toolbar: Toolbar;
   public cm: ContentsManager;
   public dr: DocumentRegistry;
   public basepath: string;
@@ -40,9 +40,17 @@ export class FileTreeWidget extends Widget {
     this.cm = lab.serviceManager.contents;
     this.dr = lab.docRegistry;
     this.commands = lab.commands;
+    this.toolbar = new Toolbar<Widget>();
     this.controller = {};
     this.selected = '';
 
+    this.toolbar.addClass('filetree-toolbar');
+    this.toolbar.addClass(id);
+
+    const layout = new PanelLayout();
+    layout.addWidget(this.toolbar);
+
+    this.layout = layout;
     this.basepath = basepath === '' ? basepath : basepath + ':';
 
     // Загрузка корневой директории
@@ -137,7 +145,6 @@ export class FileTreeWidget extends Widget {
             // Клик на папке - выделяем и переключаем
             this.selectItem(path);
             this.toggleFolder(path, level, tr);
-
             this._onFolderChange(path);
           }
         };
@@ -439,9 +446,7 @@ export class FileTreeWidget extends Widget {
     return btoa(unescape(encodeURIComponent(str)));
   }
 
-  // Метод для обновления дерева (может быть полезен при внешних изменениях)
   public refresh(): void {
-    // Очищаем текущее состояние
     while (this.tree.firstChild) {
       this.tree.removeChild(this.tree.firstChild);
     }
@@ -449,7 +454,6 @@ export class FileTreeWidget extends Widget {
     this._openFolders.clear();
     this.selected = '';
 
-    // Перезагружаем корневую директорию
     const base = this.cm.get(this.basepath);
     base
       .then(res => {
@@ -464,17 +468,7 @@ export class FileTreeWidget extends Widget {
   public navigateTo(path: string): void {
     const normalizedPath = path.replace(/^\/|\/$/g, '');
 
-    //this.collapseAll();
-
     this.ensurePathExpanded(normalizedPath);
-
-    // Если путь пустой - останавливаемся на корне
-    /*
-    if (!normalizedPath) {
-      this.selected = '';
-      return;
-    }
-    */
 
     this.expandPathTo(normalizedPath);
 
