@@ -8,13 +8,19 @@ import { Uploader } from './uploader';
 import { ToolbarButton } from '@jupyterlab/apputils';
 import { CommandIDs } from './utils';
 import { refreshIcon } from '@jupyterlab/ui-components';
+import { LogoButtonsWidget } from './top-buttons';
 
 export function createMainWidgets() {
   const dockPanel = new DockPanel();
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
+  const logoWidget = new LogoButtonsWidget(
+    'https://s3.twcstorage.ru/c499f568-f74defa5-3966-4c98-81d8-620254b44e2c/logo.png', 
+    'NPI Educational', 
+    'Список курсов'
+  );
 
-  return { dockPanel, stackedPanel, toggleButton };
+  return { dockPanel, stackedPanel, toggleButton, logoWidget };
 }
 
 export function createDocumentManager(app: JupyterFrontEnd, dockPanel: DockPanel) {
@@ -103,6 +109,7 @@ export function setupWidgets(
   fileTree: FileTreeWidget,
   tileManager: TileFileManagerWidget,
   toggleButton: TogglePanelWidget,
+  logoWidget: LogoButtonsWidget
 ) {
   // Основная панель документа (с лаунчерами)
   dockPanel.id = 'npi-dockpanel';
@@ -117,7 +124,8 @@ export function setupWidgets(
   const widgetsToAdd = [
     { widget: dockPanel, area: 'top' as const, options: {} },
     { widget: stackedPanel, area: 'top' as const, options: {} },
-    { widget: toggleButton, area: 'top' as const, options: { rank: 1000 } }
+    { widget: toggleButton, area: 'top' as const, options: { rank: 1000 } },
+    { widget: logoWidget, area: 'top' as const, options: { rank: 0 } }
   ];
 
   widgetsToAdd.forEach(({ widget, area, options }) => {
