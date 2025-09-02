@@ -19,7 +19,21 @@ export class TogglePanelWidget extends Widget {
     this.node.appendChild(this._toggleButton);
   }
 
-  toggle() {
+  public setPanelState(isVisible: boolean) {
+    this._isPanelVisible = isVisible;
+
+    if (this._isPanelVisible) {
+      this._dockPanel.node.style.display = 'block';
+      this._toggleButton.innerText = '▶';
+      this.node.classList.remove('panel-hidden-state');
+    } else {
+      this._dockPanel.node.style.display = 'none';
+      this._toggleButton.innerText = '◀';
+      this.node.classList.add('panel-hidden-state');
+    }
+  }
+
+  private toggle() {
     this._isPanelVisible = !this._isPanelVisible;
 
     if (this._isPanelVisible) {

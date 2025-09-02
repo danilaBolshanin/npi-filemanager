@@ -67,13 +67,13 @@ export class LogoButtonsWidget extends Widget {
     // Клонируем и заменяем кнопки для удаления всех обработчиков
     const newButton1 = this._button1.cloneNode(true) as HTMLElement;
     const newButton2 = this._button2.cloneNode(true) as HTMLElement;
-    
+
     this._container.replaceChild(newButton1, this._button1);
     this._container.replaceChild(newButton2, this._button2);
-    
+
     this._button1 = newButton1;
     this._button2 = newButton2;
-    
+
     super.onBeforeDetach(msg);
   }
 }

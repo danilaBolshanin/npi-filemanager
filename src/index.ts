@@ -5,15 +5,18 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { ILauncher } from '@jupyterlab/launcher';
-import {
-  ICommandPalette,
-  IWindowResolver,
-} from '@jupyterlab/apputils';
+import { ICommandPalette, IWindowResolver } from '@jupyterlab/apputils';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { IDocumentManager } from '@jupyterlab/docmanager';
 
 import { registerCommands } from './register';
-import { addToolbarItems, createDocumentManager, createFileManager, createMainWidgets, setupWidgets } from './pluginSetup';
+import {
+  addToolbarItems,
+  createDocumentManager,
+  createFileManager,
+  createMainWidgets,
+  setupWidgets
+} from './pluginSetup';
 
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'npi-filemanager',
@@ -30,15 +33,27 @@ const plugin: JupyterFrontEndPlugin<void> = {
     IRouter
   ],
   activate: (app: JupyterFrontEnd) => {
-    const { dockPanel, stackedPanel, toggleButton, logoWidget } = createMainWidgets();
+    const { dockPanel, stackedPanel, toggleButton, logoWidget } =
+      createMainWidgets();
 
     const { docManger } = createDocumentManager(app, dockPanel);
 
     const { fileTree, tileManager, uploader } = createFileManager(
-      app, dockPanel, toggleButton, docManger
+      app,
+      dockPanel,
+      toggleButton,
+      docManger
     );
 
-    setupWidgets(app, dockPanel, stackedPanel, fileTree, tileManager, toggleButton, logoWidget);
+    setupWidgets(
+      app,
+      dockPanel,
+      stackedPanel,
+      fileTree,
+      tileManager,
+      toggleButton,
+      logoWidget
+    );
 
     registerCommands(app, fileTree);
 

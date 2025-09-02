@@ -3,6 +3,7 @@ import { ContentsManager } from '@jupyterlab/services';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { LabIcon } from '@jupyterlab/ui-components';
+import { TogglePanelWidget } from './toggle-main-panel-btn';
 
 export class TileFileManagerWidget extends Widget {
   public cm: ContentsManager;
@@ -14,6 +15,7 @@ export class TileFileManagerWidget extends Widget {
   private _onFileClick: (path: string) => void;
   private _container: HTMLElement;
   private _breadcrumb: HTMLElement;
+  private _toggleButton: TogglePanelWidget | null = null;
 
   public constructor(
     lab: JupyterFrontEnd,
@@ -192,9 +194,11 @@ export class TileFileManagerWidget extends Widget {
         this.currentPath = path;
         this.updateBreadcrumb();
         this.loadFolderContents();
-
-        // Уведомляем FileTree о изменении папки
         this._onFolderChange(path);
+
+        if (this._toggleButton) {
+          this._toggleButton.setPanelState(true);
+        }
       };
     } else {
       tile.ondblclick = () => {
@@ -204,6 +208,10 @@ export class TileFileManagerWidget extends Widget {
 
         this._onFileClick(path);
         this.openFile(item.path);
+
+        if (this._toggleButton) {
+          this._toggleButton.setPanelState(false);
+        }
       };
     }
 
@@ -225,5 +233,9 @@ export class TileFileManagerWidget extends Widget {
 
   public setFolderChangeCallback(callback: (path: string) => void): void {
     this._onFolderChange = callback;
+  }
+
+  setToggleButton(toggleButton: TogglePanelWidget) {
+    this._toggleButton = toggleButton;
   }
 }

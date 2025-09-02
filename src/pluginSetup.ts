@@ -15,17 +15,20 @@ export function createMainWidgets() {
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
   const logoWidget = new LogoButtonsWidget(
-    'https://s3.twcstorage.ru/c499f568-f74defa5-3966-4c98-81d8-620254b44e2c/logo.png', 
-    'NPI Educational', 
+    'https://s3.twcstorage.ru/c499f568-f74defa5-3966-4c98-81d8-620254b44e2c/logo.png',
+    'NPI Educational',
     'Список курсов'
   );
 
   return { dockPanel, stackedPanel, toggleButton, logoWidget };
 }
 
-export function createDocumentManager(app: JupyterFrontEnd, dockPanel: DockPanel) {
+export function createDocumentManager(
+  app: JupyterFrontEnd,
+  dockPanel: DockPanel
+) {
   const widgets = new Set<Widget>();
-  
+
   const opener = {
     open: (widget: Widget) => {
       if (!widgets.has(widget)) {
@@ -55,8 +58,8 @@ export function createDocumentManager(app: JupyterFrontEnd, dockPanel: DockPanel
 }
 
 export function createFileManager(
-  app: JupyterFrontEnd, 
-  dockPanel: DockPanel, 
+  app: JupyterFrontEnd,
+  dockPanel: DockPanel,
   toggleButton: TogglePanelWidget,
   docManger: DocumentManager
 ) {
@@ -70,9 +73,11 @@ export function createFileManager(
     'jupyterlab-filetree',
     (path: string) => {
       tileManager.navigateTo(path);
+      toggleButton.setPanelState(true);
     },
     _ => {
       dockPanel.node.style.display = 'none';
+      toggleButton.setPanelState(false);
     }
   );
 
@@ -89,6 +94,7 @@ export function createFileManager(
     },
     _ => {
       dockPanel.node.style.display = 'none';
+      toggleButton.setPanelState(false);
       if (toggleButton) {
         toggleButton.node.style.display = 'block';
       }
@@ -96,7 +102,8 @@ export function createFileManager(
     'jupyterlab-filetree'
   );
 
-  // Создаем uploader
+  tileManager.setToggleButton(toggleButton);
+
   const uploader = new Uploader({ manager: docManger, widget: fileTree });
 
   return { fileTree, tileManager, uploader };
@@ -149,4 +156,3 @@ export function addToolbarItems(
   fileTree.toolbar.addItem('upload', uploader);
   fileTree.toolbar.addItem('refresh', refresh);
 }
-
