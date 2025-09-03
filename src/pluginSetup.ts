@@ -1,5 +1,5 @@
 import { DockPanel, StackedPanel, Widget } from '@lumino/widgets';
-import { TogglePanelWidget } from './toggle-main-panel-btn';
+import { TogglePanelWidget } from './toggle-panel';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { DocumentManager } from '@jupyterlab/docmanager';
 import { FileTreeWidget } from './file-tree';

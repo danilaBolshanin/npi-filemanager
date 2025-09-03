@@ -33,18 +33,8 @@ export class TogglePanelWidget extends Widget {
     }
   }
 
-  private toggle() {
-    this._isPanelVisible = !this._isPanelVisible;
-
-    if (this._isPanelVisible) {
-      this._dockPanel.node.style.display = 'block';
-      this._toggleButton.innerText = '▶';
-      this.node.classList.remove('panel-hidden-state');
-    } else {
-      this._dockPanel.node.style.display = 'none';
-      this._toggleButton.innerText = '◀';
-      this.node.classList.add('panel-hidden-state');
-    }
+  toggle() {
+    this.setPanelState(!this._isPanelVisible);
   }
 
   protected onAfterAttach(msg: Message): void {

@@ -3,7 +3,7 @@ import { ContentsManager } from '@jupyterlab/services';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { LabIcon } from '@jupyterlab/ui-components';
-import { TogglePanelWidget } from './toggle-main-panel-btn';
+import { TogglePanelWidget } from './toggle-panel';
 
 export class TileFileManagerWidget extends Widget {
   public cm: ContentsManager;
