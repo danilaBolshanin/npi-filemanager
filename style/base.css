@@ -591,3 +591,10 @@ th {
 .modal-close-button:hover {
   background-color: #d32f2f;
 }
+
+.modal-content-container {
+  margin-bottom: 16px;
+  max-height: 60vh;
+  overflow-y: auto;
+  background-color: white;
+}

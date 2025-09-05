@@ -1,11 +1,11 @@
 import { Widget } from '@lumino/widgets';
 import { Message } from '@lumino/messaging';
+import { ModalContentWidget } from './modal-content';
 
 export class ModalWidget extends Widget {
   private _openButton: HTMLButtonElement;
   private _modalOverlay: HTMLDivElement;
-  private _modalContent: HTMLDivElement;
-  private _closeButton: HTMLButtonElement;
+  private _modalContent: ModalContentWidget;
 
   constructor(buttonText: string = 'Open Modal', modalTitle: string = 'Modal Title') {
     super();
@@ -24,31 +24,21 @@ export class ModalWidget extends Widget {
     this._modalOverlay.className = 'modal-overlay';
     this._modalOverlay.style.display = 'none';
     
-    this._modalContent = document.createElement('div');
-    this._modalContent.className = 'modal-content';
+    // Создаем виджет контента модального окна
+    this._modalContent = new ModalContentWidget(modalTitle);
+    this._modalContent.setOnClose(() => {
+      this.closeModal();
+    });
     
-    // Заголовок модального окна
-    const title = document.createElement('h2');
-    title.textContent = modalTitle;
-    title.className = 'modal-title';
-    
-    // Кнопка закрытия внутри модального окна
-    this._closeButton = document.createElement('button');
-    this._closeButton.textContent = 'Close';
-    this._closeButton.className = 'modal-close-button';
-    
-    // Собираем структуру модального окна
-    this._modalContent.appendChild(title);
-    this._modalContent.appendChild(this._closeButton);
-    this._modalOverlay.appendChild(this._modalContent);
-    
+    // Добавляем контент в оверлей
+    this._modalOverlay.appendChild(this._modalContent.node);
+
     // Добавляем элементы в виджет
     this.node.appendChild(this._openButton);
     this.node.appendChild(this._modalOverlay);
     
     // Назначаем обработчики событий
     this._openButton.addEventListener('click', this.openModal.bind(this));
-    this._closeButton.addEventListener('click', this.closeModal.bind(this));
     this._modalOverlay.addEventListener('click', this.handleOverlayClick.bind(this));
   }
 
@@ -86,29 +76,27 @@ export class ModalWidget extends Widget {
     }
   }
 
-  // Методы для обновления контента модального окна
-  public setModalContent(content: HTMLElement): void {
-    // Очищаем текущий контент (кроме заголовка и кнопки закрытия)
-    while (this._modalContent.firstChild) {
-      if (this._modalContent.firstChild !== this._closeButton) {
-        this._modalContent.removeChild(this._modalContent.firstChild);
-      } else {
-        break;
-      }
-    }
-    
-    // Добавляем новый контент перед кнопкой закрытия
-    this._modalContent.insertBefore(content, this._closeButton);
-  }
-
   public setButtonText(text: string): void {
     this._openButton.textContent = text;
   }
 
+  public setHtmlContent(html: string): void {
+    this._modalContent.setHtmlContent(html);
+  }
+
+  public addContent(content: HTMLElement | Widget): void {
+    this._modalContent.addContent(content);
+  }
+
+  public clearContent(): void {
+    this._modalContent.clearContent();
+  }
+
   public setModalTitle(title: string): void {
-    const titleElement = this._modalContent.querySelector('.modal-title');
-    if (titleElement) {
-      titleElement.textContent = title;
-    }
+    this._modalContent.setTitle(title);
+  }
+
+  public get contentWidget(): ModalContentWidget {
+    return this._modalContent;
   }
 }

@@ -4,7 +4,7 @@ import {
   showErrorMessage,
   ToolbarButton
 } from '@jupyterlab/apputils';
-import { Private } from './private';
+import { Private } from '../library/private';
 import { Signal } from '@lumino/signaling';
 import { IChangedArgs, PageConfig } from '@jupyterlab/coreutils';
 import { IDocumentManager, shouldOverwrite } from '@jupyterlab/docmanager';

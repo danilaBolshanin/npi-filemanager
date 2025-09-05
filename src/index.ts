@@ -9,14 +9,14 @@ import { ICommandPalette, IWindowResolver } from '@jupyterlab/apputils';
 import { IFileBrowserFactory } from '@jupyterlab/filebrowser';
 import { IDocumentManager } from '@jupyterlab/docmanager';
 
-import { registerCommands } from './register';
+import { registerCommands } from './library/register';
 import {
   addToolbarItems,
   createDocumentManager,
   createFileManager,
   createMainWidgets,
   setupWidgets
-} from './pluginSetup';
+} from './library/pluginSetup';
 
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'npi-filemanager',
