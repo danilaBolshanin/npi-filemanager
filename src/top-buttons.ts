@@ -5,9 +5,8 @@ export class LogoButtonsWidget extends Widget {
   private _container: HTMLElement;
   private _logo: HTMLElement;
   private _button1: HTMLElement;
-  private _button2: HTMLElement;
 
-  constructor(logoUrl: string, button1Text: string, button2Text: string) {
+  constructor(logoUrl: string, button1Text: string) {
     super();
 
     // Устанавливаем ID и классы для контейнера
@@ -35,13 +34,6 @@ export class LogoButtonsWidget extends Widget {
     this._button1.classList.add('logo-button');
     this._button1.classList.add('button-primary'); // Пример класса для стилизации
     this._container.appendChild(this._button1);
-
-    // Создаем вторую кнопку
-    this._button2 = document.createElement('button');
-    this._button2.innerText = button2Text;
-    this._button2.classList.add('logo-button');
-    this._button2.classList.add('button-secondary'); // Пример класса для стилизации
-    this._container.appendChild(this._button2);
   }
 
   // Методы для обработки кликов по кнопкам
@@ -49,30 +41,19 @@ export class LogoButtonsWidget extends Widget {
     this._button1.addEventListener('click', handler);
   }
 
-  setButton2ClickHandler(handler: () => void): void {
-    this._button2.addEventListener('click', handler);
-  }
-
   // Методы для обновления текста кнопок
   updateButton1Text(text: string): void {
     this._button1.innerText = text;
-  }
-
-  updateButton2Text(text: string): void {
-    this._button2.innerText = text;
   }
 
   // Очистка обработчиков событий при отсоединении
   protected onBeforeDetach(msg: Message): void {
     // Клонируем и заменяем кнопки для удаления всех обработчиков
     const newButton1 = this._button1.cloneNode(true) as HTMLElement;
-    const newButton2 = this._button2.cloneNode(true) as HTMLElement;
 
     this._container.replaceChild(newButton1, this._button1);
-    this._container.replaceChild(newButton2, this._button2);
 
     this._button1 = newButton1;
-    this._button2 = newButton2;
 
     super.onBeforeDetach(msg);
   }

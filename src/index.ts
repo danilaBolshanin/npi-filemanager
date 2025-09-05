@@ -33,7 +33,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     IRouter
   ],
   activate: (app: JupyterFrontEnd) => {
-    const { dockPanel, stackedPanel, toggleButton, logoWidget } =
+    const { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget } =
       createMainWidgets();
 
     const { docManger } = createDocumentManager(app, dockPanel);
@@ -52,7 +52,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       fileTree,
       tileManager,
       toggleButton,
-      logoWidget
+      logoWidget,
+      modalWidget
     );
 
     registerCommands(app, fileTree);

@@ -9,6 +9,7 @@ import { ToolbarButton } from '@jupyterlab/apputils';
 import { CommandIDs } from './utils';
 import { refreshIcon } from '@jupyterlab/ui-components';
 import { LogoButtonsWidget } from './top-buttons';
+import { ModalWidget } from './modal';
 
 export function createMainWidgets() {
   const dockPanel = new DockPanel();
@@ -17,10 +18,22 @@ export function createMainWidgets() {
   const logoWidget = new LogoButtonsWidget(
     'https://s3.twcstorage.ru/c499f568-f74defa5-3966-4c98-81d8-620254b44e2c/logo.png',
     'NPI Educational',
-    'Список курсов'
   );
+  const modalWidget = new ModalWidget('Список курсов', 'Application Settings');
+  const content = document.createElement('div');
+  content.innerHTML = `
+    <p>This is the settings panel where you can configure various options.</p>
+    <label>
+      <input type="checkbox" /> Enable notifications
+    </label>
+    <br>
+    <label>
+      <input type="range" min="0" max="100" /> Volume level
+    </label>
+  `;
+  modalWidget.setModalContent(content);
 
-  return { dockPanel, stackedPanel, toggleButton, logoWidget };
+  return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget };
 }
 
 export function createDocumentManager(
@@ -116,7 +129,8 @@ export function setupWidgets(
   fileTree: FileTreeWidget,
   tileManager: TileFileManagerWidget,
   toggleButton: TogglePanelWidget,
-  logoWidget: LogoButtonsWidget
+  logoWidget: LogoButtonsWidget,
+  modalWidget: ModalWidget
 ) {
   // Основная панель документа (с лаунчерами)
   dockPanel.id = 'npi-dockpanel';
@@ -132,7 +146,8 @@ export function setupWidgets(
     { widget: dockPanel, area: 'top' as const, options: {} },
     { widget: stackedPanel, area: 'top' as const, options: {} },
     { widget: toggleButton, area: 'top' as const, options: { rank: 1000 } },
-    { widget: logoWidget, area: 'top' as const, options: { rank: 0 } }
+    { widget: logoWidget, area: 'top' as const, options: { rank: 0 } },
+    { widget: modalWidget, area: 'top' as const, options: { rank: 0 } }
   ];
 
   widgetsToAdd.forEach(({ widget, area, options }) => {
