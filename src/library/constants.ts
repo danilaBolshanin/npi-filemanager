@@ -11,3 +11,6 @@ export const MODAL_CONTENT = `
 
 export const NPI_LOGO_URL = 'https://s3.twcstorage.ru/c499f568-f74defa5-3966-4c98-81d8-620254b44e2c/logo.png'
 export const NPI_EDU_NAME = 'NPI Educational'
+
+export const LARGE_FILE_SIZE = 15 * 1024 * 1024;
+export const CHUNK_SIZE = 1024 * 1024;

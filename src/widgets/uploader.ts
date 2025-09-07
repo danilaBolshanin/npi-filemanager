@@ -12,10 +12,7 @@ import { FileTreeWidget } from './file-tree';
 import { fileUploadIcon } from '@jupyterlab/ui-components';
 import { Contents } from '@jupyterlab/services';
 import { ArrayExt } from '@lumino/algorithm';
-
-export const LARGE_FILE_SIZE = 15 * 1024 * 1024;
-
-export const CHUNK_SIZE = 1024 * 1024;
+import { CHUNK_SIZE, LARGE_FILE_SIZE } from '../library/constants';
 
 export interface IUploadModel {
   path: string;
@@ -81,7 +78,6 @@ export class Uploader extends ToolbarButton {
     await this._uploadCheckDisposed();
 
     const contents = await this.widget.cm.get(this.context);
-    console.log(contents);
     contents.content.forEach(async (entry: any) => {
       if (entry.name === file.name && !(await shouldOverwrite(file.name))) {
         throw err;
@@ -168,7 +164,9 @@ export class Uploader extends ToolbarButton {
 
     if (!chunked) {
       try {
-        return await uploadInner(file);
+        const result = await uploadInner(file);
+        await this.widget.refresh();
+        return result;
       } catch (err) {
         ArrayExt.removeFirstWhere(
           this._uploads,
@@ -231,6 +229,8 @@ export class Uploader extends ToolbarButton {
       newValue: null,
       oldValue: upload
     });
+
+    await this.widget.refresh();
 
     return finalModel;
   }
