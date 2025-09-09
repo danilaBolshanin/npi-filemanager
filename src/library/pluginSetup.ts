@@ -1,15 +1,15 @@
 import { DockPanel, StackedPanel, Widget } from '@lumino/widgets';
-import { TogglePanelWidget } from '../widgets/toggle-panel';
+import { TogglePanelWidget } from '../widgets/tile-file-manager/toggle-panel';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { DocumentManager } from '@jupyterlab/docmanager';
-import { FileTreeWidget } from '../widgets/file-tree';
-import { TileFileManagerWidget } from '../widgets/tile-file-manager';
+import { FileTreeWidget } from '../widgets/file-tree/file-tree';
+import { TileFileManagerWidget } from '../widgets/tile-file-manager/tile-file-manager';
 import { Uploader } from '../widgets/uploader';
 import { ToolbarButton } from '@jupyterlab/apputils';
 import { CommandIDs } from './utils';
 import { refreshIcon } from '@jupyterlab/ui-components';
 import { LogoButtonsWidget } from '../widgets/top-buttons';
-import { ModalWidget } from '../widgets/modal';
+import { ModalWidget } from '../widgets/modal/modal';
 import { MODAL_CONTENT, NPI_EDU_NAME, NPI_LOGO_URL } from './constants';
 
 export function createMainWidgets() {

@@ -2,8 +2,9 @@ import { JupyterFrontEnd } from '@jupyterlab/application';
 import { PanelLayout, Widget } from '@lumino/widgets';
 import { ContentsManager } from '@jupyterlab/services';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
-import { CommandIDs } from '../library/utils';
 import { LabIcon, Toolbar } from '@jupyterlab/ui-components';
+
+import { CommandIDs } from '../../library/utils';
 
 export class FileTreeWidget extends Widget {
   public commands: any;

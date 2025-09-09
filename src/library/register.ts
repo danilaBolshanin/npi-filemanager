@@ -1,5 +1,5 @@
 import { JupyterFrontEnd } from '@jupyterlab/application';
-import { FileTreeWidget } from '../widgets/file-tree';
+import { FileTreeWidget } from '../widgets/file-tree/file-tree';
 import { PathExt } from '@jupyterlab/coreutils';
 import { CommandIDs, switchView, u_atob, u_btoa } from './utils';
 
