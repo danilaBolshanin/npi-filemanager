@@ -16,10 +16,7 @@ export function createMainWidgets() {
   const dockPanel = new DockPanel();
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
-  const logoWidget = new LogoButtonsWidget(
-    NPI_LOGO_URL,
-    NPI_EDU_NAME,
-  );
+  const logoWidget = new LogoButtonsWidget(NPI_LOGO_URL, NPI_EDU_NAME);
   const modalWidget = new ModalWidget('Список курсов', 'Application Settings');
   modalWidget.setHtmlContent(MODAL_CONTENT);
 

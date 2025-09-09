@@ -92,7 +92,10 @@ export class TileFileManagerWidget extends Widget {
       item.textContent = part;
 
       const pathToNavigate = currentPath;
-      item.onclick = () => this.navigateTo(pathToNavigate);
+      item.onclick = () => {
+        this.navigateTo(pathToNavigate);
+        this._onFolderChange(pathToNavigate);
+      };
 
       breadcrumbContainer.appendChild(item);
     }
@@ -110,8 +113,16 @@ export class TileFileManagerWidget extends Widget {
       })
       .catch(error => {
         console.error('Error loading folder contents:', error);
-        this._container.innerHTML =
-          '<div class="tile-error">Error loading folder contents</div>';
+
+        // Если произошла ошибка, переходим в корневую директорию
+        if (this.currentPath !== '') {
+          const parentPath = this.getParentPath(this.currentPath);
+          this.navigateTo(parentPath);
+        } else {
+          // Если уже в корневой директории, показываем сообщение об ошибке
+          this._container.innerHTML =
+            '<div class="tile-error">Не удалось загрузить содержимое папки</div>';
+        }
       });
   }
 
@@ -233,6 +244,18 @@ export class TileFileManagerWidget extends Widget {
 
   public setFolderChangeCallback(callback: (path: string) => void): void {
     this._onFolderChange = callback;
+  }
+
+  private getParentPath(path: string): string {
+    if (!path) return '';
+
+    const normalizedPath = path.replace(/^\/|\/$/g, '');
+
+    const parts = normalizedPath.split('/');
+
+    parts.pop();
+
+    return parts.join('/');
   }
 
   setToggleButton(toggleButton: TogglePanelWidget) {

@@ -21,5 +21,19 @@
     "target": "ES2018",
     "types": ["jest"]
   },
-  "include": ["src/*", "src/library/constants.ts", "src/library/register.ts", "src/library/pluginSetup.ts", "src/library/private.ts", "src/library/utils.ts", "src/widgets/file-tree.ts", "src/widgets/modal-content.ts", "src/widgets/modal.ts", "src/widgets/tile-file-manager.ts", "src/widgets/toggle-panel.ts", "src/widgets/top-buttons.ts", "src/widgets/uploader.ts"]
+  "include": [
+    "src/*",
+    "src/library/constants.ts",
+    "src/library/register.ts",
+    "src/library/pluginSetup.ts",
+    "src/library/private.ts",
+    "src/library/utils.ts",
+    "src/widgets/file-tree.ts",
+    "src/widgets/modal-content.ts",
+    "src/widgets/modal.ts",
+    "src/widgets/tile-file-manager.ts",
+    "src/widgets/toggle-panel.ts",
+    "src/widgets/top-buttons.ts",
+    "src/widgets/uploader.ts"
+  ]
 }

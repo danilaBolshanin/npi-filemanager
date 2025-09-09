@@ -7,39 +7,45 @@ export class ModalWidget extends Widget {
   private _modalOverlay: HTMLDivElement;
   private _modalContent: ModalContentWidget;
 
-  constructor(buttonText: string = 'Open Modal', modalTitle: string = 'Modal Title') {
+  constructor(
+    buttonText: string = 'Open Modal',
+    modalTitle: string = 'Modal Title'
+  ) {
     super();
-    
+
     this.addClass('modal-widget-container');
     this.id = 'modal-widget-container';
-    
+
     // Создаем кнопку для открытия модального окна
     this._openButton = document.createElement('button');
     this._openButton.textContent = buttonText;
     this._openButton.classList.add('logo-button');
     this._openButton.classList.add('button-secondary');
-    
+
     // Создаем модальное окно
     this._modalOverlay = document.createElement('div');
     this._modalOverlay.className = 'modal-overlay';
     this._modalOverlay.style.display = 'none';
-    
+
     // Создаем виджет контента модального окна
     this._modalContent = new ModalContentWidget(modalTitle);
     this._modalContent.setOnClose(() => {
       this.closeModal();
     });
-    
+
     // Добавляем контент в оверлей
     this._modalOverlay.appendChild(this._modalContent.node);
 
     // Добавляем элементы в виджет
     this.node.appendChild(this._openButton);
     this.node.appendChild(this._modalOverlay);
-    
+
     // Назначаем обработчики событий
     this._openButton.addEventListener('click', this.openModal.bind(this));
-    this._modalOverlay.addEventListener('click', this.handleOverlayClick.bind(this));
+    this._modalOverlay.addEventListener(
+      'click',
+      this.handleOverlayClick.bind(this)
+    );
   }
 
   // Метод для открытия модального окна

@@ -9,11 +9,11 @@ export class ModalContentWidget extends Widget {
     super();
     this._title = title;
     this.addClass('modal-content');
-    
+
     // Создаем контейнер для контента
     this._contentContainer = document.createElement('div');
     this._contentContainer.className = 'modal-content-container';
-    
+
     this.renderContent();
   }
 
