@@ -8,7 +8,7 @@ import { Private } from '../library/private';
 import { Signal } from '@lumino/signaling';
 import { IChangedArgs, PageConfig } from '@jupyterlab/coreutils';
 import { IDocumentManager, shouldOverwrite } from '@jupyterlab/docmanager';
-import { FileTreeWidget } from './file-tree/file-tree';
+import { FileTreeWidget } from './file-tree';
 import { fileUploadIcon } from '@jupyterlab/ui-components';
 import { Contents } from '@jupyterlab/services';
 import { ArrayExt } from '@lumino/algorithm';

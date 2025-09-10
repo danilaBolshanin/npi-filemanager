@@ -1,26 +1,32 @@
 import { DockPanel, StackedPanel, Widget } from '@lumino/widgets';
-import { TogglePanelWidget } from '../widgets/tile-file-manager/toggle-panel';
+import { ToolbarButton } from '@jupyterlab/apputils';
+import { refreshIcon } from '@jupyterlab/ui-components';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { DocumentManager } from '@jupyterlab/docmanager';
-import { FileTreeWidget } from '../widgets/file-tree/file-tree';
-import { TileFileManagerWidget } from '../widgets/tile-file-manager/tile-file-manager';
+
+import { TogglePanelWidget } from '../widgets/tile-file-manager/toggle-panel';
+import { FileTreeWidget } from '../widgets/file-tree/index';
+import { TileFileManagerWidget } from '../widgets/tile-file-manager/index';
 import { Uploader } from '../widgets/uploader';
-import { ToolbarButton } from '@jupyterlab/apputils';
-import { CommandIDs } from './utils';
-import { refreshIcon } from '@jupyterlab/ui-components';
 import { LogoButtonsWidget } from '../widgets/top-buttons';
-import { ModalWidget } from '../widgets/modal/modal';
+import { ModalWidget } from '../widgets/modal/index';
+import { AssignmentListWidget } from '../widgets/assignment-list/index';
+
+import { CommandIDs } from './utils';
 import { MODAL_CONTENT, NPI_EDU_NAME, NPI_LOGO_URL } from './constants';
 
-export function createMainWidgets() {
+export function createMainWidgets(app: JupyterFrontEnd) {
   const dockPanel = new DockPanel();
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
   const logoWidget = new LogoButtonsWidget(NPI_LOGO_URL, NPI_EDU_NAME);
+
   const modalWidget = new ModalWidget('Список курсов', 'Application Settings');
   modalWidget.setHtmlContent(MODAL_CONTENT);
 
-  return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget };
+  const assignmentList = new AssignmentListWidget(app)
+
+  return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget, assignmentList };
 }
 
 export function createDocumentManager(
@@ -117,7 +123,8 @@ export function setupWidgets(
   tileManager: TileFileManagerWidget,
   toggleButton: TogglePanelWidget,
   logoWidget: LogoButtonsWidget,
-  modalWidget: ModalWidget
+  modalWidget: ModalWidget,
+  assignment_list: AssignmentListWidget,
 ) {
   // Основная панель документа (с лаунчерами)
   dockPanel.id = 'npi-dockpanel';
