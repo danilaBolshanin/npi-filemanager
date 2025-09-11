@@ -13,20 +13,19 @@ import { ModalWidget } from '../widgets/modal/index';
 import { AssignmentListWidget } from '../widgets/assignment-list/index';
 
 import { CommandIDs } from './utils';
-import { MODAL_CONTENT, NPI_EDU_NAME, NPI_LOGO_URL } from './constants';
+import { NPI_EDU_NAME, NPI_LOGO_URL } from './constants';
 
 export function createMainWidgets(app: JupyterFrontEnd) {
   const dockPanel = new DockPanel();
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
   const logoWidget = new LogoButtonsWidget(NPI_LOGO_URL, NPI_EDU_NAME);
+  const modalWidget = new ModalWidget('Список курсов', 'Список курсов');
+  const assignmentList = new AssignmentListWidget(app);
 
-  const modalWidget = new ModalWidget('Список курсов', 'Application Settings');
-  modalWidget.setHtmlContent(MODAL_CONTENT);
+  modalWidget.addContent(assignmentList);
 
-  const assignmentList = new AssignmentListWidget(app)
-
-  return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget, assignmentList };
+  return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget };
 }
 
 export function createDocumentManager(
@@ -124,7 +123,6 @@ export function setupWidgets(
   toggleButton: TogglePanelWidget,
   logoWidget: LogoButtonsWidget,
   modalWidget: ModalWidget,
-  assignment_list: AssignmentListWidget,
 ) {
   // Основная панель документа (с лаунчерами)
   dockPanel.id = 'npi-dockpanel';
@@ -141,7 +139,7 @@ export function setupWidgets(
     { widget: stackedPanel, area: 'top' as const, options: {} },
     { widget: toggleButton, area: 'top' as const, options: { rank: 1000 } },
     { widget: logoWidget, area: 'top' as const, options: { rank: 0 } },
-    { widget: modalWidget, area: 'top' as const, options: { rank: 0 } }
+    { widget: modalWidget, area: 'top' as const, options: { rank: 0 } },
   ];
 
   widgetsToAdd.forEach(({ widget, area, options }) => {
