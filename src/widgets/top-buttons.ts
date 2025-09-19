@@ -37,7 +37,7 @@ export class LogoButtonsWidget extends Widget {
   }
 
   // Методы для обработки кликов по кнопкам
-  setButton1ClickHandler(handler: () => void): void {
+  setButtonClickHandler(handler: () => void): void {
     this._button1.addEventListener('click', handler);
   }
 

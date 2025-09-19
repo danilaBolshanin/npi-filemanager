@@ -32,18 +32,19 @@
 }
 
 #jp-top-panel {
-  min-height: 35px !important;
-  height: 35px !important;
+  min-height: 42px !important;
+  height: 42px !important;
   width: 100%;
   display: flex;
   justify-content: space-between;
+  padding-left: 15px;
 }
 
 /* Стили для кастомных панелей */
 .npi-dockpanel {
   position: fixed;
   left: 385px;
-  top: 35px;
+  top: 42px;
   z-index: 1000;
   background-color: white;
   width: calc(100% - 385px);
@@ -53,7 +54,7 @@
 .npi-stackedpanel {
   position: fixed;
   left: 0;
-  top: 35px;
+  top: 42px;
   z-index: 1000;
   background-color: white;
   min-width: 385px;
@@ -84,6 +85,11 @@
   width: 100%;
   border-spacing: 0px;
   overflow: scroll;
+}
+
+.filetree-toolbar {
+  width: 100%;
+  padding-left: 8px;
 }
 
 .filetree-item-name {
@@ -472,6 +478,8 @@ th {
 /* Контейнер с кнопками для топ-панели */
 .flex-column-container {
   max-width: min-content;
+  display: flex;
+  align-items: center;
 }
 
 /* Внутренний контейнер для элементов */
@@ -480,7 +488,7 @@ th {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 /* Стили для логотипа */
@@ -525,7 +533,7 @@ th {
   display: inline-block;
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
 /* Кнопка открытия модального окна */

@@ -25,6 +25,10 @@ export function createMainWidgets(app: JupyterFrontEnd) {
 
   modalWidget.addContent(assignmentList);
 
+  logoWidget.setButtonClickHandler(() => {
+    window?.open("https://tutor-npi.ru/")
+  })
+
   return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget };
 }
 
