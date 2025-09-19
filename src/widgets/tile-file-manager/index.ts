@@ -131,6 +131,11 @@ export class TileFileManagerWidget extends Widget {
     // Очищаем контейнер
     this._container.innerHTML = '';
 
+    if (!contents || contents.length === 0) {
+      this.showEmptyFolderMessage();
+      return;
+    }
+
     // Сортируем: сначала папки, потом файлы
     const sortedContents = this.sortDataByType(contents);
 
@@ -261,5 +266,17 @@ export class TileFileManagerWidget extends Widget {
 
   setToggleButton(toggleButton: TogglePanelWidget) {
     this._toggleButton = toggleButton;
+  }
+
+  private showEmptyFolderMessage(): void {
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'tile-empty-folder';
+    
+    const text = document.createElement('div');
+    text.className = 'tile-empty-text';
+    text.textContent = 'Эта папка пуста';
+    
+    messageContainer.appendChild(text);
+    this._container.appendChild(messageContainer);
   }
 }
