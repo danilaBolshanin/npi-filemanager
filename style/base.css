@@ -522,13 +522,65 @@ th {
 }
 
 /* Общие стили для кнопок */
-.logo-button {
+.modal-button {
   padding: 6px 8px;
   border: none;
   cursor: pointer;
   font-size: 14px;
   min-width: 120px;
   transition: background-color 0.2s;
+}
+
+/* Стили для кнопки с иконкой */
+.logo-button {
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.logo-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.logo-button {
+  position: relative;
+}
+
+.logo-button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  z-index: 1000;
+}
+
+.logo-button:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Стили для конкретных кнопок */
@@ -708,6 +760,31 @@ th {
 
 .modal-close-button:hover {
   background-color: #d32f2f;
+}
+
+.modal-button.with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  gap: 8px;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.modal-button-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+}
+
+.modal-button-text {
+  line-height: 1;
 }
 
 .my-assignment-list {

@@ -1,6 +1,7 @@
 import { Widget } from '@lumino/widgets';
 import { Message } from '@lumino/messaging';
 import { ModalContentWidget } from './modal-content';
+import { LabIcon, jupyterIcon } from '@jupyterlab/ui-components';
 
 export class ModalWidget extends Widget {
   private _openButton: HTMLButtonElement;
@@ -9,7 +10,8 @@ export class ModalWidget extends Widget {
 
   constructor(
     buttonText: string = 'Open Modal',
-    modalTitle: string = 'Modal Title'
+    modalTitle: string = 'Modal Title',
+    icon: LabIcon = jupyterIcon
   ) {
     super();
 
@@ -18,9 +20,17 @@ export class ModalWidget extends Widget {
 
     // Создаем кнопку для открытия модального окна
     this._openButton = document.createElement('button');
-    this._openButton.textContent = buttonText;
-    this._openButton.classList.add('logo-button');
+    this._openButton.classList.add('modal-button');
     this._openButton.classList.add('button-secondary');
+    this._openButton.classList.add('with-icon');
+
+    const buttonContent = document.createElement('div');
+    buttonContent.className = 'button-content';
+
+    const iconElement = icon.element({
+      className: 'modal-button-icon'
+    });
+    buttonContent.appendChild(iconElement);
 
     // Создаем модальное окно
     this._modalOverlay = document.createElement('div');
@@ -32,6 +42,13 @@ export class ModalWidget extends Widget {
     this._modalContent.setOnClose(() => {
       this.closeModal();
     });
+
+    const textElement = document.createElement('span');
+    textElement.className = 'modal-button-text';
+    textElement.textContent = buttonText;
+    buttonContent.appendChild(textElement);
+
+    this._openButton.appendChild(buttonContent);
 
     // Добавляем контент в оверлей
     this._modalOverlay.appendChild(this._modalContent.node);

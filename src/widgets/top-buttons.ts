@@ -3,58 +3,68 @@ import { Widget } from '@lumino/widgets';
 
 export class LogoButtonsWidget extends Widget {
   private _container: HTMLElement;
-  private _logo: HTMLElement;
-  private _button1: HTMLElement;
+  private _button: HTMLButtonElement;
 
-  constructor(logoUrl: string, button1Text: string) {
+  constructor(logoUrl: string, tooltipText: string) {
     super();
 
     // Устанавливаем ID и классы для контейнера
     this.id = 'logo-buttons-container';
     this.addClass('logo-buttons-container');
-    this.addClass('flex-column-container'); // Добавляем класс для flex стилей
+    this.addClass('flex-column-container');
 
     // Создаем внутренний контейнер
     this._container = document.createElement('div');
     this._container.classList.add('logo-buttons-inner');
     this.node.appendChild(this._container);
 
-    // Создаем элемент логотипа
-    this._logo = document.createElement('img');
+    // Создаем кнопку с иконкой
+    this._button = document.createElement('button');
+    this._button.classList.add('logo-button');
+    
+    // Создаем элемент изображения для иконки
+    const icon = document.createElement('img');
     //@ts-ignore
-    this._logo.src = logoUrl;
+    icon.src = logoUrl;
     //@ts-ignore
-    this._logo.alt = 'Logo';
-    this._logo.classList.add('logo-image');
-    this._container.appendChild(this._logo);
-
-    // Создаем первую кнопку
-    this._button1 = document.createElement('button');
-    this._button1.innerText = button1Text;
-    this._button1.classList.add('logo-button');
-    this._button1.classList.add('button-primary'); // Пример класса для стилизации
-    this._container.appendChild(this._button1);
+    icon.alt = 'Logo';
+    icon.classList.add('logo-icon');
+    
+    // Добавляем иконку в кнопку
+    this._button.appendChild(icon);
+    
+    // Добавляем тултип
+    this._button.title = tooltipText;
+    this._button.setAttribute('aria-label', tooltipText);
+    
+    this._container.appendChild(this._button);
   }
 
-  // Методы для обработки кликов по кнопкам
+  // Метод для обработки кликов по кнопке
   setButtonClickHandler(handler: () => void): void {
-    this._button1.addEventListener('click', handler);
+    this._button.addEventListener('click', handler);
   }
 
-  // Методы для обновления текста кнопок
-  updateButton1Text(text: string): void {
-    this._button1.innerText = text;
+  // Метод для обновления тултипа
+  updateTooltipText(text: string): void {
+    this._button.title = text;
+    this._button.setAttribute('aria-label', text);
+  }
+
+  // Метод для обновления иконки
+  updateLogo(logoUrl: string): void {
+    const icon = this._button.querySelector('.logo-icon') as HTMLImageElement;
+    if (icon) {
+      //@ts-ignore
+      icon.src = logoUrl;
+    }
   }
 
   // Очистка обработчиков событий при отсоединении
   protected onBeforeDetach(msg: Message): void {
-    // Клонируем и заменяем кнопки для удаления всех обработчиков
-    const newButton1 = this._button1.cloneNode(true) as HTMLElement;
-
-    this._container.replaceChild(newButton1, this._button1);
-
-    this._button1 = newButton1;
-
+    const newButton = this._button.cloneNode(true) as HTMLButtonElement;
+    this._container.replaceChild(newButton, this._button);
+    this._button = newButton;
     super.onBeforeDetach(msg);
   }
 }

@@ -1,6 +1,6 @@
 import { DockPanel, StackedPanel, Widget } from '@lumino/widgets';
 import { ToolbarButton } from '@jupyterlab/apputils';
-import { refreshIcon } from '@jupyterlab/ui-components';
+import { refreshIcon, listIcon } from '@jupyterlab/ui-components';
 import { JupyterFrontEnd } from '@jupyterlab/application';
 import { DocumentManager } from '@jupyterlab/docmanager';
 
@@ -20,7 +20,7 @@ export function createMainWidgets(app: JupyterFrontEnd) {
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
   const logoWidget = new LogoButtonsWidget(NPI_LOGO_URL, NPI_EDU_NAME);
-  const modalWidget = new ModalWidget('Список курсов', 'Список курсов');
+  const modalWidget = new ModalWidget('Список курсов', 'Список курсов', listIcon);
   const assignmentList = new AssignmentListWidget(app);
   console.log(assignmentList)
 
