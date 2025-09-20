@@ -722,22 +722,139 @@ th {
   font-size: 14px;
   max-height: 400px;
   overflow-y: auto;
+  width: 100%;
 }
 
+/* Заголовки панелей */
 .my-assignment-list .panel-heading {
   background: #e0e7ff;
   font-weight: bold;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
 }
 
+/* Контейнеры списков */
+.my-assignment-list .list_container {
+  margin-bottom: 16px;
+}
+
+/* Элементы списка - заменяем таблицу на flex */
 .my-assignment-list .list_item {
-  padding: 6px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
   border-bottom: 1px solid #eee;
+  background: white;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+/* Заголовок таблицы - заменяем на специальный элемент */
+.my-assignment-list .list_item.table-title {
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+/* Колонки внутри элемента списка */
+.my-assignment-list .list_item > div {
+  flex: 1;
+  padding: 0 8px;
+}
+
+/* Выравнивание третьей колонки вправо */
+.my-assignment-list .list_item > div:nth-child(3) {
+  text-align: right;
+  flex: 0 0 auto;
+}
+
+/* Кнопки */
+.my-assignment-list button.btn {
+  font-size: 0.8em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #061b2f;
+  cursor: pointer;
+}
+
+/* Специфичная кнопка загрузки */
+.my-assignment-list .button-download {
+  background-color: #1b75cd;
+  color: white;
 }
 
 .my-assignment-list .list_item:hover {
   background: #dbeafe;
 }
 
-.my-assignment-list button.btn {
-  font-size: 0.8em;
+/* Состояния загрузки и ошибок */
+.my-assignment-list .list_loading,
+.my-assignment-list .list_placeholder,
+.my-assignment-list .list_error {
+  padding: 16px;
+  text-align: center;
+  background: white;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+}
+
+.my-assignment-list .list_error {
+  background-color: #fee;
+  border-color: #fcc;
+}
+
+/* Панели */
+.my-assignment-list .panel {
+  margin-bottom: 20px;
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #ddd;
+}
+
+.my-assignment-list .panel-body {
+  padding: 0;
+}
+
+/* Toolbar */
+.my-assignment-list .list_toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 8px 0;
+}
+
+.my-assignment-list .toolbar_info {
+  margin-right: 12px;
+}
+
+.my-assignment-list .tree-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Dropdown */
+.my-assignment-list .dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Alert */
+.my-assignment-list .alert {
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.my-assignment-list .version_error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
 }

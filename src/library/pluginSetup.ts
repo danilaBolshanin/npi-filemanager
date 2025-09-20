@@ -24,7 +24,7 @@ export function createMainWidgets(app: JupyterFrontEnd) {
   const assignmentList = new AssignmentListWidget(app);
   console.log(assignmentList)
 
-  //modalWidget.addContent(assignmentList);
+  modalWidget.addContent(assignmentList);
 
   logoWidget.setButtonClickHandler(() => {
     window?.open("https://tutor-npi.ru/")
