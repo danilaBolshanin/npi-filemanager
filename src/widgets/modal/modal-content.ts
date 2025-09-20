@@ -4,6 +4,7 @@ export class ModalContentWidget extends Widget {
   private _title: string;
   private _onClose: (() => void) | null = null;
   private _contentContainer: HTMLDivElement;
+  private _closeButton!: HTMLButtonElement;
 
   constructor(title: string = 'Modal Title') {
     super();
@@ -17,12 +18,13 @@ export class ModalContentWidget extends Widget {
     this.renderContent();
   }
 
-  // Метод для рендеринга содержимого
   private renderContent(): void {
-    // Очищаем текущее содержимое
     while (this.node.firstChild) {
       this.node.removeChild(this.node.firstChild);
     }
+
+    const headerContainer = document.createElement('div');
+    headerContainer.className = 'modal-header';
 
     // Создаем заголовок
     const titleElement = document.createElement('h2');
@@ -34,19 +36,22 @@ export class ModalContentWidget extends Widget {
     this._contentContainer.className = 'modal-content-container';
 
     // Создаем кнопку закрытия
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.className = 'modal-close-button';
-    closeButton.addEventListener('click', () => {
+    this._closeButton = document.createElement('button');
+    this._closeButton.innerHTML = '&times;'; 
+    this._closeButton.className = 'modal-close-x';
+    this._closeButton.addEventListener('click', () => {
       if (this._onClose) {
         this._onClose();
       }
     });
 
+    headerContainer.appendChild(titleElement);
+    headerContainer.appendChild(this._closeButton);
+    
+
     // Добавляем элементы в виджет
-    this.node.appendChild(titleElement);
+    this.node.appendChild(headerContainer);
     this.node.appendChild(this._contentContainer);
-    this.node.appendChild(closeButton);
   }
 
   // Метод для установки HTML-контента
