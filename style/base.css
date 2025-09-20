@@ -246,34 +246,41 @@ th {
   padding: 10px;
 }
 
-.tile-breadcrumb {
-  margin-top: -10px;
-  margin-bottom: 15px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: var(--jp-ui-font-size1);
-  background-color: transparent !important; /* Убираем фон */
-}
-
+/* Стили для хлебных крошек */
 .tile-breadcrumb-path {
   display: flex;
   align-items: center;
-}
-
-.tile-breadcrumb-separator {
-  margin: 0 5px;
-  color: var(--jp-ui-font-color2);
+  flex-wrap: wrap;
+  font-size: 14px;
+  margin-bottom: 16px;
 }
 
 .tile-breadcrumb-item {
   cursor: pointer;
-  padding: 2px 5px;
-  border-radius: 3px;
-  transition: background-color 0.2s ease;
+  color: #666;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .tile-breadcrumb-item:hover {
-  background-color: var(--jp-layout-color3);
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.tile-breadcrumb-item.current {
+  color: #424242; /* Темно-серый цвет текста */
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: #9e9e9e; /* Серый цвет подчеркивания */
+}
+
+.tile-breadcrumb-separator {
+  color: #999;
+  margin: 0 4px;
+  user-select: none;
 }
 
 .tile-container {
