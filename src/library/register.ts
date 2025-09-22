@@ -97,7 +97,6 @@ export function registerCommands(
           }
         });
         promise.catch(reason => {
-          console.log(reason);
           delete fileTree.controller[key];
         });
       });

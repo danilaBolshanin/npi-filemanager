@@ -56,7 +56,6 @@ export class Uploader extends ToolbarButton {
   }
 
   public async upload(file: File, path: string): Promise<Contents.IModel> {
-    console.log(this.manager);
     const supportsChunked = PageConfig.getNotebookVersion() >= [5, 1, 0];
     const largeFile = file.size > LARGE_FILE_SIZE;
 

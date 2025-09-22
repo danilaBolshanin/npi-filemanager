@@ -239,6 +239,7 @@ export class AssignmentList {
       const data = await requestAPI<any>('assignments?course_id=' + course, {
         method: 'GET'
       });
+      console.log(data)
       this.handle_load_list(data);
     } catch (reason) {
       console.error(`Error on GET /assignments.\n${reason}`);

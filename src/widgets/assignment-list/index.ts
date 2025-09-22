@@ -24,7 +24,6 @@ export class AssignmentListWidget extends Widget {
     this.node.style.overflowY = 'auto';
 
     let base_url = PageConfig.getBaseUrl();
-    console.log("base_url", base_url)
     let options = new Map();
     options.set('base_url', base_url);
     var assignment_l = new AssignmentList(

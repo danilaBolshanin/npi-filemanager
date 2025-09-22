@@ -22,7 +22,6 @@ export function createMainWidgets(app: JupyterFrontEnd) {
   const logoWidget = new LogoButtonsWidget(NPI_LOGO_URL, NPI_EDU_NAME);
   const modalWidget = new ModalWidget('Список курсов', 'Список курсов', listIcon);
   const assignmentList = new AssignmentListWidget(app);
-  console.log(assignmentList)
 
   modalWidget.addContent(assignmentList);
 
