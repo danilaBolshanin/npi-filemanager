@@ -37,7 +37,7 @@ export class ModalContentWidget extends Widget {
 
     // Создаем кнопку закрытия
     this._closeButton = document.createElement('button');
-    this._closeButton.innerHTML = '&times;'; 
+    this._closeButton.innerHTML = '&times;';
     this._closeButton.className = 'modal-close-x';
     this._closeButton.addEventListener('click', () => {
       if (this._onClose) {
@@ -47,7 +47,6 @@ export class ModalContentWidget extends Widget {
 
     headerContainer.appendChild(titleElement);
     headerContainer.appendChild(this._closeButton);
-    
 
     // Добавляем элементы в виджет
     this.node.appendChild(headerContainer);

@@ -20,14 +20,18 @@ export function createMainWidgets(app: JupyterFrontEnd) {
   const stackedPanel = new StackedPanel();
   const toggleButton = new TogglePanelWidget(dockPanel);
   const logoWidget = new LogoButtonsWidget(NPI_LOGO_URL, NPI_EDU_NAME);
-  const modalWidget = new ModalWidget('Список курсов', 'Список курсов', listIcon);
+  const modalWidget = new ModalWidget(
+    'Список курсов',
+    'Список курсов',
+    listIcon
+  );
   const assignmentList = new AssignmentListWidget(app);
 
   modalWidget.addContent(assignmentList);
 
   logoWidget.setButtonClickHandler(() => {
-    window?.open("https://tutor-npi.ru/")
-  })
+    window?.open('https://tutor-npi.ru/');
+  });
 
   return { dockPanel, stackedPanel, toggleButton, logoWidget, modalWidget };
 }
@@ -126,7 +130,7 @@ export function setupWidgets(
   tileManager: TileFileManagerWidget,
   toggleButton: TogglePanelWidget,
   logoWidget: LogoButtonsWidget,
-  modalWidget: ModalWidget,
+  modalWidget: ModalWidget
 ) {
   // Основная панель документа (с лаунчерами)
   dockPanel.id = 'npi-dockpanel';
@@ -143,7 +147,7 @@ export function setupWidgets(
     { widget: stackedPanel, area: 'top' as const, options: {} },
     { widget: toggleButton, area: 'top' as const, options: { rank: 1000 } },
     { widget: logoWidget, area: 'top' as const, options: { rank: 0 } },
-    { widget: modalWidget, area: 'top' as const, options: { rank: 0 } },
+    { widget: modalWidget, area: 'top' as const, options: { rank: 0 } }
   ];
 
   widgetsToAdd.forEach(({ widget, area, options }) => {

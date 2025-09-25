@@ -1,7 +1,7 @@
-import { JupyterFrontEnd } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 import { PageConfig } from '@jupyterlab/coreutils';
-import { remove_children, requestAPI } from "./utils";
-import { validate } from "./validate";
+import { remove_children, requestAPI } from './utils';
+import { validate } from './validate';
 
 export class Notebook {
   element: HTMLDivElement;

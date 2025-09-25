@@ -53,7 +53,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       tileManager,
       toggleButton,
       logoWidget,
-      modalWidget,
+      modalWidget
     );
 
     registerCommands(app, fileTree);

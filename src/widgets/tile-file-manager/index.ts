@@ -58,68 +58,68 @@ export class TileFileManagerWidget extends Widget {
   }
 
   private updateBreadcrumb(): void {
-  this._breadcrumb.innerHTML = '';
+    this._breadcrumb.innerHTML = '';
 
-  const normalizedPath = this.currentPath.replace(/^\/|\/$/g, '');
-  const parts = normalizedPath.split('/').filter(part => part !== '');
+    const normalizedPath = this.currentPath.replace(/^\/|\/$/g, '');
+    const parts = normalizedPath.split('/').filter(part => part !== '');
 
-  const breadcrumbContainer = document.createElement('div');
-  breadcrumbContainer.className = 'tile-breadcrumb-path';
+    const breadcrumbContainer = document.createElement('div');
+    breadcrumbContainer.className = 'tile-breadcrumb-path';
 
-  // Добавляем корневой элемент
-  const rootItem = document.createElement('span');
-  rootItem.className = 'tile-breadcrumb-item';
-  if (this.currentPath === '') {
-    rootItem.classList.add('current'); // Добавляем класс для текущего элемента
-  }
-  rootItem.textContent = 'Главная';
-  rootItem.onclick = () => {
-    this.navigateTo('');
-    this._onFolderChange('');
-  };
-  breadcrumbContainer.appendChild(rootItem);
-
-  // ВСЕГДА добавляем разделитель после корневого элемента
-  const separator = document.createElement('span');
-  separator.className = 'tile-breadcrumb-separator';
-  separator.textContent = ' / ';
-  breadcrumbContainer.appendChild(separator);
-
-  // Добавляем остальные элементы пути
-  let currentPath = '';
-  for (let i = 0; i < parts.length; i++) {
-    const part = parts[i];
-    currentPath = currentPath ? `${currentPath}/${part}` : part;
-
-    const item = document.createElement('span');
-    item.className = 'tile-breadcrumb-item';
-    
-    // Проверяем, является ли этот элемент текущим
-    if (currentPath === this.currentPath) {
-      item.classList.add('current'); // Добавляем класс для текущего элемента
+    // Добавляем корневой элемент
+    const rootItem = document.createElement('span');
+    rootItem.className = 'tile-breadcrumb-item';
+    if (this.currentPath === '') {
+      rootItem.classList.add('current'); // Добавляем класс для текущего элемента
     }
-    
-    item.textContent = part;
-
-    const pathToNavigate = currentPath;
-    item.onclick = () => {
-      this.navigateTo(pathToNavigate);
-      this._onFolderChange(pathToNavigate);
+    rootItem.textContent = 'Главная';
+    rootItem.onclick = () => {
+      this.navigateTo('');
+      this._onFolderChange('');
     };
+    breadcrumbContainer.appendChild(rootItem);
 
-    breadcrumbContainer.appendChild(item);
+    // ВСЕГДА добавляем разделитель после корневого элемента
+    const separator = document.createElement('span');
+    separator.className = 'tile-breadcrumb-separator';
+    separator.textContent = ' / ';
+    breadcrumbContainer.appendChild(separator);
 
-    // Добавляем разделитель после каждого элемента, кроме последнего
-    if (i < parts.length - 1) {
-      const nextSeparator = document.createElement('span');
-      nextSeparator.className = 'tile-breadcrumb-separator';
-      nextSeparator.textContent = ' / ';
-      breadcrumbContainer.appendChild(nextSeparator);
+    // Добавляем остальные элементы пути
+    let currentPath = '';
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      currentPath = currentPath ? `${currentPath}/${part}` : part;
+
+      const item = document.createElement('span');
+      item.className = 'tile-breadcrumb-item';
+
+      // Проверяем, является ли этот элемент текущим
+      if (currentPath === this.currentPath) {
+        item.classList.add('current'); // Добавляем класс для текущего элемента
+      }
+
+      item.textContent = part;
+
+      const pathToNavigate = currentPath;
+      item.onclick = () => {
+        this.navigateTo(pathToNavigate);
+        this._onFolderChange(pathToNavigate);
+      };
+
+      breadcrumbContainer.appendChild(item);
+
+      // Добавляем разделитель после каждого элемента, кроме последнего
+      if (i < parts.length - 1) {
+        const nextSeparator = document.createElement('span');
+        nextSeparator.className = 'tile-breadcrumb-separator';
+        nextSeparator.textContent = ' / ';
+        breadcrumbContainer.appendChild(nextSeparator);
+      }
     }
-  }
 
-  this._breadcrumb.appendChild(breadcrumbContainer);
-}
+    this._breadcrumb.appendChild(breadcrumbContainer);
+  }
 
   private loadFolderContents(): void {
     const fullPath = this.basepath + this.currentPath;
@@ -288,11 +288,11 @@ export class TileFileManagerWidget extends Widget {
   private showEmptyFolderMessage(): void {
     const messageContainer = document.createElement('div');
     messageContainer.className = 'tile-empty-folder';
-    
+
     const text = document.createElement('div');
     text.className = 'tile-empty-text';
     text.textContent = 'Эта папка пуста';
-    
+
     messageContainer.appendChild(text);
     this._container.appendChild(messageContainer);
   }

@@ -1,10 +1,10 @@
-import { JupyterFrontEnd } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 import { PageConfig } from '@jupyterlab/coreutils';
-import React from "react";
+import React from 'react';
 import { showNbGraderDialog } from './validate';
 import { Dialog } from '@jupyterlab/apputils';
-import { remove_children, requestAPI } from "./utils";
-import { Submission } from "./submission";
+import { remove_children, requestAPI } from './utils';
+import { Submission } from './submission';
 import { Notebook } from './notebook';
 
 export class Assignment {

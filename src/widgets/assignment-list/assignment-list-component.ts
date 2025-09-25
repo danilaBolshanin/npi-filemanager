@@ -235,11 +235,12 @@ export class AssignmentList {
   public async load_list(course: string, callback: any) {
     this.callback = callback;
     this.clear_list(true);
+
     try {
       const data = await requestAPI<any>('assignments?course_id=' + course, {
         method: 'GET'
       });
-      console.log(data)
+      //console.log(data);
       this.handle_load_list(data);
     } catch (reason) {
       console.error(`Error on GET /assignments.\n${reason}`);
@@ -442,4 +443,3 @@ export class CourseList {
     this.enable_list();
   }
 }
-

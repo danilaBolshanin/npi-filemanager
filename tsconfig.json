@@ -42,10 +42,7 @@
     "src/widgets/assignment-list/assignment.ts",
     "src/widgets/assignment-list/utils.ts",
     "src/widgets/assignment-list/notebook.ts",
-    "src/widgets/assignment-list/submission.ts",
+    "src/widgets/assignment-list/submission.ts"
   ],
-  "exclude": [
-    "node_modules",
-    "**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "**/*.test.ts"]
 }

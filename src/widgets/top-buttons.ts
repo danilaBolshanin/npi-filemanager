@@ -21,7 +21,7 @@ export class LogoButtonsWidget extends Widget {
     // Создаем кнопку с иконкой
     this._button = document.createElement('button');
     this._button.classList.add('logo-button');
-    
+
     // Создаем элемент изображения для иконки
     const icon = document.createElement('img');
     //@ts-ignore
@@ -29,14 +29,14 @@ export class LogoButtonsWidget extends Widget {
     //@ts-ignore
     icon.alt = 'Logo';
     icon.classList.add('logo-icon');
-    
+
     // Добавляем иконку в кнопку
     this._button.appendChild(icon);
-    
+
     // Добавляем тултип
     this._button.title = tooltipText;
     this._button.setAttribute('aria-label', tooltipText);
-    
+
     this._container.appendChild(this._button);
   }
 

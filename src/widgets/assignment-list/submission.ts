@@ -1,4 +1,4 @@
-import { JupyterFrontEnd } from "@jupyterlab/application";
+import { JupyterFrontEnd } from '@jupyterlab/application';
 import { PageConfig } from '@jupyterlab/coreutils';
 
 export class Submission {
